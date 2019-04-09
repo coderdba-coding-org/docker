@@ -1,3 +1,6 @@
+git config user.email coderdba@coder.com
+git config user.name coderdba
+
 echo "# docker" >> README.md
 git init
 #git add README.md
