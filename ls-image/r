@@ -1,1 +1,4 @@
-docker run -d -p 81:81 hello-flask
+#docker run ls-image:0.0.1
+#docker run ls-image:0.0.1 -l
+docker run --rm ls-image:0.0.1 -l
+

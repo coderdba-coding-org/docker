@@ -1,1 +1,1 @@
-docker build -t hello-flask:0.0.1 .
+docker build -t ls-image:0.0.1 .

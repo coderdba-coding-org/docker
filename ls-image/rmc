@@ -1,0 +1,9 @@
+docker rm f2d412a8845e
+docker rm 6b1afea638b8
+docker rm d47686e3858b
+docker rm 8979687d7eaa
+docker rm 57081bb4b9c7
+docker rm 760902e68534
+docker rm 3a843d6d0620
+docker rm 868f344ab47b
+docker rm 571d48a99859
