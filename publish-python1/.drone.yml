@@ -1,0 +1,30 @@
+secrets:
+  svcartifactory_password:
+    #path: secret/org/TeamOrg/svcartifactory
+    path: secret/org/my-k8s-development/svcartifactory
+  myusername_password:
+    path: secret/org/my-k8s-development/myusername
+##
+pipeline:
+  docker:
+    image: plugins/docker
+    #repo: binrepo.company.com/artifactory/team-shared/sample-app-python
+    #registry: binrepo.company.com/artifactory/team-shared/
+    repo: docker.company.com/TeamOrg/myusername/sample-app-python
+    registry: docker.company.com/TeamOrg
+    tags:
+      - latest
+      #- "${DRONE_TAG}"
+    #secrets: [ "svcartifactory", svcartifactory_password ]
+    #secrets: [ "myusername", myusername_password ]
+    #username: myusername
+    #secrets: 
+    #  - source: myusername_password
+    #    company: plugin_password
+    username: svcartifactory
+    secrets: 
+      - source: svcartifactory_password
+        company: plugin_password
+    when:
+      event: push
+      branch: master
