@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+outfile=/fsmetrics/fs.out
+
+`date` > $outfile
+df -k >> $outfile 2>> $outfile

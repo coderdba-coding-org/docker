@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: fsmetrics
+  labels:
+spec:
+  selector:
+    matchLabels:
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 100%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: metrics
+        image: host-fs-checker:latest
+        #imagePullPolicy: Always
+        command: [ "sh", "-c"]
+        args:
+        - while true; do
+            ./fs.sh /tmp/fsmetrics
+            sleep 300;
+          done;
+        volumeMounts:
+        - name: fsmetrics
+          mountPath: "/fsmetrics"
+        volumeMounts:
+        - name: fsmetricsOut
+          mountPath: "/fsmetricsOut"
+      volumes:
+      - name: fsmetrics
+        hostPath:
+          path: /tmp/fsmetrics
+      - name: fsmetricsOut
+        hostPath:
+          path: /tmp/fsmetricsOut
