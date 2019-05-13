@@ -25,12 +25,18 @@ spec:
             ./fs.sh /tmp/fsmetrics
             sleep 300;
           done;
+#
+#
+#     Mounts on container (to map to folders on host below)
         volumeMounts:
         - name: fsmetrics
           mountPath: "/fsmetrics"
         volumeMounts:
         - name: fsmetricsOut
           mountPath: "/fsmetricsOut"
+#
+#
+#     Folders on host
       volumes:
       - name: fsmetrics
         hostPath:
