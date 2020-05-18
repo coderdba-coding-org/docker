@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-autofixer
+spec:
+  revisionHistoryLimit: 10
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: kube-autofixer
+    spec:
+      containers:
+      - name: kube-autofixer
+        image: kube-autofixer:0.0.0
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-autofixer
+spec:
+  revisionHistoryLimit: 10
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: kube-autofix
+    spec:
+      containers:
+      - name: kube-autofix
+        image: kube-autofixer:0.0.0
+
