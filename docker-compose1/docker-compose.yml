@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+
+  # INFLUX DB - WHICH IS USED BY THE API IN THIS REPO 
+  # NOTE: This influx DB itself is not coded in this repo - it is pulled from public/private docker repo
+  # influx container with database volume mounted at $PWD/influxdbstore
+  # influxdb port is 8086 mapped to host's 8087
+  influxdbstore:
+    image: "influxdb"
+    ports:
+      - "8087:8086"
+    networks:
+      - shared
+    volumes:
+      - "./influxdbstore:/var/lib/influxdb"
+    environment:
+      - INFLUXDB_DB=metrics
+
+
+# TO BUILD AND BRING UP THE API CODED IN THIS REPO
+# NOTE: Though the name of the repo is different, the image will be named as "podstatestore-api:testing"
+# you can add more than one port as needed, one below the other
+#
+# If you want to push the image to a repo instead of local
+#   image: "docker.company.com/app/podstatestore-api:testing"
+#
+
+  podstatestore-api:
+    build: .
+    image: "podstatestore-api:testing"
+    depends_on:
+      - influxdbstore
+    ports:
+      - "8089:8081"
+    #networks:
+      #- shared
+    volumes:
+      - "./htpasswd:/etc/htpasswd"
+    #volumes:
+      #- "./test-podstatestore:/podstatestore"
+      #- "./htpasswd:/etc/nginx/htpasswd"
+      #- "./cert.crt:/etc/nginx/ssl/cert.crt"
+      #- "./private.key:/etc/nginx/ssl/private.key"
+    environment:
+      - RUNTIME_ENVIRONMENT=local
+      - APP_ID=APP03131
+      - STATESTORE_HOST=localhost
+      - CONCURRENCY=10
+      - INFLUXDB_HOST=http://influxdbstore:8086
+      - INFLUXDB_DATABASE=metrics
+      - INFLUXDB_OUTPUT_TIMEOUT=60
+      - INFLUXDB_PUSH_INTERVAL=30s
+      - BATCHSIZE=10
+
+volumes:
+  influxdbstore:
+  #test-podstatestore:
+  htpasswd:
+  #crt.crt:
+  #private.key:
+
+networks:
+  shared:
