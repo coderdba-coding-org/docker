@@ -10,4 +10,9 @@ RUN apk add --update ca-certificates \
     && curl -L https://dl.k8s.io/release/v1.22.0/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl \
     && apk del --purge deps \
-    && rm /var/cache/apk/*
+    && rm /var/cache/apk/* \
+    && mkdir /root/.kube
+
+COPY admin.kubeconfig.ksn2 /root/.kube/.
+COPY admin.kubeconfig.ksn3 /root/.kube/.
+
