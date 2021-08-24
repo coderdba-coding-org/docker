@@ -51,9 +51,46 @@ kube-system     kube-controller-manager-ksn3                1/1     Running   4 
 kube-system     kube-proxy-jv8pc                            1/1     Running   3          3d6h
 kube-system     kube-scheduler-ksn3                         1/1     Running   4          3d11h
 
+======================================================
+RUN WITH KUBECONFIG THAT IS MOUNTED TO THE IMAGE
+======================================================
+
+$ docker run -v /tmp:/root/hosttmp --rm alpine-kubectl:1.22  kubectl get pods --all-namespaces --kubeconfig=/root/hosttmp/admin.kubeconfig.ksn3
+NAMESPACE       NAME                                        READY   STATUS    RESTARTS   AGE
+default         web-79d88c97d6-h5kqp                        1/1     Running   1          2d7h
+default         web2-5d47994f45-44xqs                       1/1     Running   1          2d7h
+ingress-nginx   ingress-nginx-controller-5b97d5cd4b-v75q5   1/1     Running   1          2d9h
+kube-system     calico-kube-controllers-86475544f5-5fvks    1/1     Running   3          3d6h
+kube-system     calico-node-mdv66                           1/1     Running   3          3d6h
+kube-system     coredns-8494f9c688-vcxrj                    1/1     Running   3          3d7h
+kube-system     kube-apiserver-ksn3                         1/1     Running   4          3d12h
+kube-system     kube-controller-manager-ksn3                1/1     Running   4          3d12h
+kube-system     kube-proxy-jv8pc                            1/1     Running   3          3d7h
+kube-system     kube-scheduler-ksn3                         1/1     Running   4          3d12h
+
+======================================================
+RUN CONTAINER AS DAEMON AND THEN ACCESS IT
+======================================================
+$ docker run --name kubectlcont -d alpine-kubectl:1.22 /bin/sh -c "while true; do ping 8.8.8.8; done"
+$ docker exec kubectlcont kubectl get pods --all-namespaces --kubeconfig=/root/.kube/admin.kubeconfig.ksn3
+
+NAMESPACE       NAME                                        READY   STATUS    RESTARTS   AGE
+default         web-79d88c97d6-h5kqp                        1/1     Running   1          2d7h
+default         web2-5d47994f45-44xqs                       1/1     Running   1          2d7h
+ingress-nginx   ingress-nginx-controller-5b97d5cd4b-v75q5   1/1     Running   1          2d9h
+kube-system     calico-kube-controllers-86475544f5-5fvks    1/1     Running   3          3d7h
+kube-system     calico-node-mdv66                           1/1     Running   3          3d7h
+kube-system     coredns-8494f9c688-vcxrj                    1/1     Running   3          3d7h
+kube-system     kube-apiserver-ksn3                         1/1     Running   4          3d12h
+kube-system     kube-controller-manager-ksn3                1/1     Running   4          3d12h
+kube-system     kube-proxy-jv8pc                            1/1     Running   3          3d7h
+kube-system     kube-scheduler-ksn3                         1/1     Running   4          3d12h
+
 ====================
 RUN - INTERACTIVE
 ====================
+This will help debug issues - like whether kubeconfig's are copied, kubectl is downloaded and such
+
 - This will remove the container afterwards
 docker run -it --rm alpine-kubectl:1.22 /bin/sh
 
