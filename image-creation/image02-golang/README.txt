@@ -109,5 +109,47 @@ b9446820177c   image02-golang:1.0   "/myapp"   4 seconds ago   Up 2 seconds   0.
 $ curl localhost:8081
 {"message":"Welcome!"}
 
+==================================
+GET INSIDE THE CONTAINER AND LOOK AROUND
+==================================
 
+$ docker exec -ti image02-golang1 /bin/sh
+/app # ls -l
+total 16
+-rw-r--r--    1 root     root            96 Aug 25 09:32 go.mod
+-rw-r--r--    1 root     root          5389 Aug 25 09:32 go.sum
+-rw-r--r--    1 root     root          1036 Aug 25 09:00 main.go
+
+/app # cd /
+/ # ls -l
+total 8996
+drwxr-xr-x    1 root     root          4096 Aug 25 09:39 app
+drwxr-xr-x    1 root     root          4096 Aug 17 01:38 bin
+drwxr-xr-x    5 root     root           340 Aug 25 10:01 dev
+drwxr-xr-x    1 root     root          4096 Aug 25 10:01 etc
+drwxrwxrwx    1 root     root          4096 Aug 25 09:38 go
+drwxr-xr-x    2 root     root          4096 Aug  5 12:25 home
+drwxr-xr-x    1 root     root          4096 Aug 17 01:38 lib
+drwxr-xr-x    5 root     root          4096 Aug  5 12:25 media
+drwxr-xr-x    2 root     root          4096 Aug  5 12:25 mnt
+-rwxr-xr-x    1 root     root       9143655 Aug 25 09:39 myapp
+drwxr-xr-x    2 root     root          4096 Aug  5 12:25 opt
+dr-xr-xr-x  199 root     root             0 Aug 25 10:01 proc
+drwx------    1 root     root          4096 Aug 25 10:01 root
+drwxr-xr-x    2 root     root          4096 Aug  5 12:25 run
+drwxr-xr-x    2 root     root          4096 Aug  5 12:25 sbin
+drwxr-xr-x    2 root     root          4096 Aug  5 12:25 srv
+dr-xr-xr-x   13 root     root             0 Aug 25 10:01 sys
+drwxrwxrwt    1 root     root          4096 Aug 25 09:39 tmp
+drwxr-xr-x    1 root     root          4096 Aug 17 01:38 usr
+drwxr-xr-x    1 root     root          4096 Aug  5 12:25 var
+
+/ # cd /tmp
+/tmp # ls -l
+total 0
+
+/tmp # uname -a
+Linux 7d7872d0b166 5.10.25-linuxkit #1 SMP Tue Mar 23 09:27:39 UTC 2021 x86_64 Linux
+
+/ # exit
 

@@ -8,7 +8,7 @@ import (
         //"encoding/json"
         //"fmt"
         //"os"
-        //"io/ioutil"
+        "io/ioutil"
         //"strings"
         //"errors"
         //client "github.com/influxdata/influxdb1-client/v2"
@@ -45,4 +45,9 @@ func StartWebServer() {
         // start the web server
         router.Run(":8081")
 
+}
+
+func ReadMessageFromFile() {
+
+	String messageFile := "/app/messages/message1.txt"	
 }
