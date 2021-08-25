@@ -3,6 +3,12 @@ WEB SERVER IN GOLANG
 =====================
 
 =====================
+Golang references
+=====================
+Read file to string: https://stackoverflow.com/questions/13514184/how-can-i-read-a-whole-file-into-a-string-variable
+Read file and print the file: https://stackoverflow.com/questions/36111777/how-to-read-a-text-file
+
+=====================
 GOLANG COMPILER IMAGE
 =====================
 
@@ -82,7 +88,22 @@ image02-golang                                                  1.0           2d
  => => naming to docker.io/library/image02-golang:1.0                                                                                                            0.0s
 
 =================================
-RUN THE IMAGE AS A CONTAINER
+RUN THE IMAGE AS A CONTAINER --> AFTER 'messages' golang code was introduced
+=================================
+- Create message file directory on host
+$ mkdir /tmp/hostmessages --> to create message1.txt file per main.go code
+
+$ echo "This is from message file again and again" > /tmp/hostmessages/message1.txt
+
+- Run container with volume mounted 
+$ docker run --name image02-golang1 -v /tmp/hostmessages:/tmp/messages -d --rm -p 8081:8081/tcp image02-golang:1.0
+
+- Verify
+curl http://localhost:8081/message
+{"message":"This is from message file again and again\n"}
+
+=================================
+RUN THE IMAGE AS A CONTAINER --> BEFORE 'messages' golang code was introduced
 =================================
 https://docs.docker.com/engine/reference/commandline/run/
 Example: docker run -p 127.0.0.1:80:8080/tcp ubuntu bash --> This binds port 8080 of the container to TCP port 80 on 127.0.0.1 of the host machine. 
@@ -152,4 +173,5 @@ total 0
 Linux 7d7872d0b166 5.10.25-linuxkit #1 SMP Tue Mar 23 09:27:39 UTC 2021 x86_64 Linux
 
 / # exit
+
 

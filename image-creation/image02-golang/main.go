@@ -42,12 +42,34 @@ func StartWebServer() {
                 })
         })
 
+        router.GET("/message", func(c *gin.Context) {
+	        message, err := ReadMessageFromFile();
+
+                if (err != nil) {
+                	c.JSON(200, gin.H{"message": "Error reading message file",})
+		} else {
+                	c.JSON(200, gin.H{"message": message,})
+                }
+        })
+
         // start the web server
         router.Run(":8081")
 
 }
 
-func ReadMessageFromFile() {
+func ReadMessageFromFile() (message string, err error){
 
-	String messageFile := "/app/messages/message1.txt"	
+	 var messageFile string = "/tmp/messages/message1.txt"	
+
+        b, err := ioutil.ReadFile(messageFile) // just pass the file name
+        if err != nil {
+	    return "", err
+        }
+
+        str := string(b) // convert content to a 'string'
+
+        //fmt.Println(b) // print the content as 'bytes'
+        //fmt.Println(str) // print the content as a 'string'
+
+        return str, nil
 }
