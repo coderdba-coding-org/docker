@@ -1,3 +1,5 @@
+#!/bin/ash
+
 podlistfile=/tmp/podlist
 KUBECONFIG=~/.kube/admin.kubeconfig.ksn3
 logfile=/tmp/pod_restarter.log
