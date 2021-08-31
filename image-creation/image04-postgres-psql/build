@@ -1,0 +1,1 @@
+docker image build . -t alpine-psql:1.0

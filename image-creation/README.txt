@@ -9,6 +9,13 @@ REFERENCES
 First Alpine Docker Image and Push it to DockerHub - https://dockerlabs.collabnix.com/beginners/building-your-first-alpine-container.html
 
 ===================
+CAUTION
+===================
+Dont use Busybox 1.33 based base images - it does not resolve nslookup kubernetes.default 
+- Instead use busybox 1.26 based images
+- Maybe Alpine:3.6 has busybox 1.26
+
+===================
 IMAGE DESCRIPTIONS
 ===================
 image01-kubectl
